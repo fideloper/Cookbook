@@ -1,7 +1,7 @@
 <?php namespace Cookbook\Cache;
 
 // Laravel Cache facade
-use Cache;
+use Illuminate\Cache\CacheManager;
 
 class LaravelCache implements CacheInterface {
 
@@ -9,7 +9,7 @@ class LaravelCache implements CacheInterface {
     protected $cachekey;
     protected $minutes;
 
-    public function __construct(Cache $cache, $cachekey, $minutes=null)
+    public function __construct(CacheManager $cache, $cachekey, $minutes=null)
     {
         $this->cache = $cache;
         $this->cachekey = $cachekey;
