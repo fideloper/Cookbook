@@ -34,7 +34,7 @@ class EloquentArticle implements ArticleInterface {
 
         // Item not cached, retrieve it
         $articles = $this->article->orderBy('created_at', 'desc')
-                             ->paginate($limit);
+                                  ->paginate($limit);
 
         // Store in cache for next request
         $this->cache->put($key, $articles);
@@ -61,8 +61,8 @@ class EloquentArticle implements ArticleInterface {
         // Item not cached, retrieve it
         // Include tags using Eloquent relationships
         $article = $this->article->with('tags')
-                             ->where('slug', $slug)
-                             ->first();
+                                 ->where('slug', $slug)
+                                 ->first();
 
         // Store in cache for next request
         $this->cache->put($key, $article);
@@ -101,9 +101,9 @@ class EloquentArticle implements ArticleInterface {
         // Do our joining a little manually here to accomplish article ordering
         // and to paginate results more easily
         $articles = $this->article->join('articles_tags', 'articles.id', '=', 'articles_tags.article_id')
-                             ->where('articles_tags.tag_id', $foundTag->id)
-                             ->orderBy('articles.created_at', 'desc')
-                             ->paginate($limit);
+                                   ->where('articles_tags.tag_id', $foundTag->id)
+                                   ->orderBy('articles.created_at', 'desc')
+                                   ->paginate($limit);
 
         // Store in cache for next request
         $this->cache->put($key, $articles);
