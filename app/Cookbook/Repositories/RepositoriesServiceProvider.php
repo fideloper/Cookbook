@@ -1,6 +1,7 @@
 <?php namespace Cookbook\Repositories;
 
 use Illuminate\Support\ServiceProvider;
+use Cookbook\Cache\LaravelCache;
 use Cookbook\Repositories\Article\EloquentArticle;
 use Article; // Eloquent article
 
@@ -15,9 +16,12 @@ class RepositoriesServiceProvider extends ServiceProvider {
     {
     	$app = $this->app;
 
-        $app->bind('Cookbook\Repositories\Article\ArticleInterface', function()
+        $app->bind('Cookbook\Repositories\Article\ArticleInterface', function() use($app)
 	    {
-    	    return new EloquentArticle( new Article );
+    	    return new EloquentArticle( 
+                new Article, 
+                new LaravelCache( $app['cache'], 'articles', 10 )
+            );
         });
 	}
 }
