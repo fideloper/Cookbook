@@ -18,11 +18,6 @@ class ContentController extends BaseController {
 		// Get 10 latest articles with pagination
 		// Still get "arrable" collection of articles
 		$articles = $this->article->byPage();
-		
-		if( count($articles) < 1 )
-		{
-			App::abort(404);
-		}
 
 		return View::make('home')->with('articles', $articles);
 	}
