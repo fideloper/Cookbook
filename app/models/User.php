@@ -20,6 +20,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = array('password');
 
 	/**
+     * Indicates if the model should soft delete.
+     *
+     * @var bool
+     */
+    protected $softDelete = true;
+
+	/**
 	 * Get the unique identifier for the user.
 	 *
 	 * @return mixed
@@ -47,6 +54,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function getReminderEmail()
 	{
 		return $this->email;
+	}
+
+	/**
+	 * Return articles belonging to set user
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function articles()
+	{
+		return $this->hasMany('Article');
 	}
 
 }
