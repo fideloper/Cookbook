@@ -16,9 +16,23 @@ interface CacheInterface {
      * @param string    Cache item key
      * @param mixed     The data to store
      * @param integer   The number of minutes to store the item
-     * @return void
+     * @return mixed    $value variable returned for convenience
      */
     public function put($key, $value, $minutes=null);
+
+    /**
+     * Add data to the cache
+     * taking pagination data into account
+     *
+     * @param integer   Page of the cached items
+     * @param integer   Number of results per page
+     * @param integer   Total number of possible items
+     * @param mixed     The actual items for this page
+     * @param string    Cache item key
+     * @param integer   The number of minutes to store the item
+     * @return mixed    $items variable returned for convenience
+     */
+    public function putPaginated($currentPage, $perPage, $totalItems, $items, $key, $minutes=null);
 
     /**
      * Test if item exists in cache
