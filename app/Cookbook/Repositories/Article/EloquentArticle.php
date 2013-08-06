@@ -33,13 +33,13 @@ class EloquentArticle implements ArticleInterface {
         }
 
         // Item not cached, retrieve it
-        $articles = $this->article->orderBy('created_at', 'desc')
+        $paginated = $this->article->orderBy('created_at', 'desc')
                                   ->paginate($limit);
 
         // Store in cache for next request
-        $this->cache->put($key, $articles);
+        $cached = $this->cache->putPaginated($page, $paginated->getPerPage(), $paginated->getTotal(), $paginated->getItems(), $key);
 
-        return $articles;
+        return $cached;
     }
 
     /**
@@ -92,23 +92,21 @@ class EloquentArticle implements ArticleInterface {
 
         if( !$foundTag )
         {   
-            // Empty array to fulfill @return expectations
-            // if no tag found
-            // Don't cache this, as likely is an error (404)
-            return array();
+            // Likely an error, return no tags
+            return false;
         }
 
         // Do our joining a little manually here to accomplish article ordering
         // and to paginate results more easily
-        $articles = $this->article->join('articles_tags', 'articles.id', '=', 'articles_tags.article_id')
+        $paginated = $this->article->join('articles_tags', 'articles.id', '=', 'articles_tags.article_id')
                                    ->where('articles_tags.tag_id', $foundTag->id)
                                    ->orderBy('articles.created_at', 'desc')
                                    ->paginate($limit);
 
         // Store in cache for next request
-        $this->cache->put($key, $articles);
+        $cached = $this->cache->putPaginated($page, $paginated->getPerPage(), $paginated->getTotal(), $paginated->getItems(), $key);
 
-        return $articles;
+        return $cached;
     }
 
 }

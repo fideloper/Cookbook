@@ -28,7 +28,21 @@ class LaravelCache implements CacheInterface {
             $minutes = $this->minutes;
         }
 
-        return $this->cache->section($this->cachekey)->put($key, $value, $minutes);
+        $this->cache->section($this->cachekey)->put($key, $value, $minutes);
+
+        return $value;
+    }
+
+    public function putPaginated($currentPage, $perPage, $totalItems, $items, $key, $minutes=null)
+    {
+        $cached = new \StdClass;
+
+        $cached->currentPage = $currentPage;
+        $cached->items = $items;
+        $cached->totalItems = $totalItems;
+        $cached->perPage = $perPage;
+
+        return $this->put($key, $cached, $minutes);
     }
 
     public function has($key)

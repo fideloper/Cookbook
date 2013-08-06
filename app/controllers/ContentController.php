@@ -15,11 +15,15 @@ class ContentController extends BaseController {
 	// Home page route
 	public function home()
 	{
-		// Get 10 latest articles with pagination
-		// Still get "arrable" collection of articles
-		$articles = $this->article->byPage();
+		// Get page, default to 1 if not present
+    	$page = Input::get('page', 1);
 
-		return View::make('home')->with('articles', $articles);
+    	// Include which $page we are currently on
+    	$pagiData = $this->article->byPage($page);
+
+        $articles = Paginator::make($pagiData->items, $pagiData->totalItems, $pagiData->perPage);
+
+        return View::make('home')->with('articles', $articles);
 	}
 
 }

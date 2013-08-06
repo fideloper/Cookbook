@@ -8,7 +8,7 @@ interface ArticleInterface {
 	 * @param int  Number of articles per page
 	 * @return array Collection of articles
 	 */
-	public function byPage($limit=10);
+	public function byPage($page=1, $limit=10);
 	
 	/**
 	 * Get single article by URL
@@ -25,6 +25,6 @@ interface ArticleInterface {
 	 * @param int Number of articles per page
 	 * @return array Collection of articles
 	 */
-	public function byTag($tag, $limit=10);
+	public function byTag($tag, $page=1, $limit=10);
 	
 }
