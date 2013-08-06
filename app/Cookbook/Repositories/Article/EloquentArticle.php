@@ -24,6 +24,7 @@ class EloquentArticle implements ArticleInterface {
      */
     public function byPage($page=1, $limit=10)
     {
+        throw new \Cookbook\Exception\CookbookException('yeee haw');
         // Build our cache item key, unique per page number and limit
         $key = md5('page.'.$page.'.'.$limit);
 
