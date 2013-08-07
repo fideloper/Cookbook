@@ -12,3 +12,36 @@
 */
 
 Route::get('/', 'ContentController@home');
+
+/*
+	Similar to Routes, the order these are added is important.
+	Last in, First out, so go from least to most specific when
+	 defining error handlers.
+
+	These error handlers are in routes as they return responses
+	to the requester.
+*/
+
+// Other Exceptions
+App::error(function(\Exception $e) {
+
+	if( Config::get('app.debug') === true )
+	{
+		return null;
+	}
+	
+	return View::make('error');
+
+});
+
+// 404
+App::error(function(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e) {
+
+	if( Config::get('app.debug') === true )
+	{
+		return null;
+	}
+
+	return View::make('404');
+
+});
