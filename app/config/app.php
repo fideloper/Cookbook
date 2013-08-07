@@ -115,6 +115,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
 		'Cookbook\Repositories\RepositoriesServiceProvider',
+		'Cookbook\Exception\ExceptionServiceProvider',
+		'Cookbook\Log\LogServiceProvider',
 
 	),
 
