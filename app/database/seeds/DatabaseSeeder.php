@@ -11,7 +11,11 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		$this->call('UserTableSeeder');
+		$this->call('ArticleTableSeeder');
+		$this->call('TagTableSeeder');
+
+		// insert into articles_tags (article_id, tag_id) VALUES (1,1), (1,2), (2,1), (3,2);
 	}
 
 }
