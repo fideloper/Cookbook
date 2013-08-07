@@ -1,7 +1,6 @@
 <?php namespace Cookbook\Exception;
 
 use Illuminate\Support\ServiceProvider;
-use Cookbook\Log\LaravelLogger;
 
 class ExceptionServiceProvider extends ServiceProvider {
 
@@ -16,7 +15,7 @@ class ExceptionServiceProvider extends ServiceProvider {
 
         $app['cookbook.exception'] = $app->share(function() use ($app)
         {
-            return new LaravelLogger( $app['log'] );
+            return new LaravelHandler( $app['cookbook.log'] );
         });
 	}
 
@@ -26,7 +25,7 @@ class ExceptionServiceProvider extends ServiceProvider {
 
         $app->error(function(CookbookException $e) use ($app)
         {
-            $app['cookbook.exception']->log('error', $e);
+            $app['cookbook.exception']->handle($e);
         });
     }
 }

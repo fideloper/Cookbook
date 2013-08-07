@@ -24,7 +24,7 @@ class LaravelHandler implements HandlerInterface {
 	 */
 	public function handle(CookbookException $exception)
 	{
-
+		$this->logger->log('error', $exception);
 	}
 
 }

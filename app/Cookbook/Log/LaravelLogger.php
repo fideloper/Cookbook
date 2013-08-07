@@ -6,16 +6,14 @@ class LaravelLogger implements LoggerInterface {
 
 	protected $log;
 
-	public function __constuct(Writer $log)
+	public function __construct(Writer $log)
 	{
 		$this->log = $log;
 	}
 
 	public function log($level, $message, array $context = array())
 	{
-		$method = 'add'.ucfirst($level);
-
-		return $this->log->$method($message, $context);
+		return $this->log->$level($message, $context);
 	}
 
 }
