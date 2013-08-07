@@ -33,11 +33,11 @@ class EloquentArticle implements ArticleInterface {
         }
 
         // Item not cached, retrieve it
-        $paginated = $this->article->orderBy('created_at', 'desc')
-                                  ->paginate($limit);
+        $articles = $this->article->orderBy('created_at', 'desc')
+                                   ->skip(($page-1)*$limit)->take($limit)->get();
 
         // Store in cache for next request
-        $cached = $this->cache->putPaginated($page, $paginated->getPerPage(), $paginated->getTotal(), $paginated->getItems(), $key);
+        $cached = $this->cache->putPaginated($page, $limit, $this->article->count(), $articles->all(), $key);
 
         return $cached;
     }
