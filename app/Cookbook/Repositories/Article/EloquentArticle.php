@@ -34,7 +34,7 @@ class EloquentArticle implements ArticleInterface {
 
         // Item not cached, retrieve it
         $articles = $this->article->orderBy('created_at', 'desc')
-                                   ->skip(($page-1)*$limit)->take($limit)->get();
+                                  ->skip(($page-1)*$limit)->take($limit)->get();
 
         // Store in cache for next request
         $cached = $this->cache->putPaginated($page, $limit, $this->article->count(), $articles->all(), $key);
@@ -98,13 +98,18 @@ class EloquentArticle implements ArticleInterface {
 
         // Do our joining a little manually here to accomplish article ordering
         // and to paginate results more easily
-        $paginated = $this->article->join('articles_tags', 'articles.id', '=', 'articles_tags.article_id')
+        $articles = $this->article->join('articles_tags', 'articles.id', '=', 'articles_tags.article_id')
                                    ->where('articles_tags.tag_id', $foundTag->id)
                                    ->orderBy('articles.created_at', 'desc')
-                                   ->paginate($limit);
+                                   ->skip(($page-1)*$limit)->take($limit)->get();
+                                   
+        $count = $this->article->join('articles_tags', 'articles.id', '=', 'articles_tags.article_id')
+                                   ->where('articles_tags.tag_id', $foundTag->id)
+                                   ->orderBy('articles.created_at', 'desc')
+                                   ->count();                            
 
         // Store in cache for next request
-        $cached = $this->cache->putPaginated($page, $paginated->getPerPage(), $paginated->getTotal(), $paginated->getItems(), $key);
+        $cached = $this->cache->putPaginated($page, $limit, $count, $articles->all(), $key);
 
         return $cached;
     }
