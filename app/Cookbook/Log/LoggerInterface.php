@@ -12,4 +12,12 @@ interface LoggerInterface {
 	 */
 	public function log($level, $message, array $context = array());
 
+	/**
+	 * Log an Exception as an error
+	 *
+	 * @param 	Exception
+	 * @return 	void
+	 */
+	public function logException(\Exception $e);
+
 }
