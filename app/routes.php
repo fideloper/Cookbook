@@ -13,6 +13,11 @@
 
 Route::get('/', 'ContentController@home');
 
+Route::group(array('prefix' => 'admin'), function()
+{
+	Route::resource('articles', 'AdminController');
+});
+
 /*
 	Similar to Routes, the order these are added is important.
 	Last in, First out, so go from least to most specific when
@@ -29,7 +34,7 @@ App::error(function(\Exception $e) {
 	{
 		return null;
 	}
-	
+
 	return View::make('error');
 
 });
