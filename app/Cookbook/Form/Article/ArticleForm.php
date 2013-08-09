@@ -6,13 +6,6 @@ use Cookbook\Repositories\Article\ArticleInterface;
 class ArticleForm {
 
 	/**
-	 * Input data
-	 *
-	 * @var array
-	 */
-	protected $data;
-
-	/**
 	 * Validator
 	 *
 	 * @var Cookbook\Validation\ValidableInterface
@@ -26,27 +19,22 @@ class ArticleForm {
 	 */
 	protected $article;
 
+
 	public function __construct(ValidableInterface $validator, ArticleInterface $article)
 	{
 		$this->validator = $validator;
 		$this->article = $article;
 	}
 
-	/**
-	 * Set input data
-	 *
-	 * @param array Input data
-	 * @return \Cookbook\Form\Article\ArticleForm
-	 */
-	public function data(array $data)
-	{
-		$this->data = $data;
-		return $this;
-	}
 
-	public function new()
+	/**
+	 * Create new article
+	 *
+	 * @return Boolean
+	 */
+	public function create(array $data)
 	{
-		if( $this->validator->passes() )
+		if( $this->validator->setData($data)->passes() )
 		{
 			$this->article->create( $this->data );
 			return true;
@@ -54,15 +42,21 @@ class ArticleForm {
 		return false;
 	}
 
-	public function save()
+	/**
+	 * Update an article
+	 *
+	 * @return Boolean
+	 */
+	public function update(array $data)
 	{
-		if( $this->validator->passes() )
+		if( $this->validator->setData($data)->passes() )
 		{
 			$this->article->update( $this->data );
 			return true;
 		}
 		return false;
 	}
+
 
 	/**
 	 * Get validation errors, if any
