@@ -117,6 +117,7 @@ return array(
 		'Cookbook\Repositories\RepositoriesServiceProvider',
 		'Cookbook\Exception\ExceptionServiceProvider',
 		'Cookbook\Log\LogServiceProvider',
+		'Cookbook\Form\FormServiceProvider',
 
 	),
 
