@@ -49,7 +49,16 @@ class AdminController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		if( $this->form->save( Input::all() ) )
+		{
+			return Redirect::to('/admin/articles')->with('status', 'success');
+		}
+
+		// Back to create page with input, errors and status
+		return Redirect::to('/admin/articles/create')
+						->withInput( Input::all() )
+						->withErrors( $this->form->errors() )
+						->with('status', 'error');
 	}
 
 	/**
