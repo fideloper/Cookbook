@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://localhost:2202',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -117,6 +117,7 @@ return array(
 		'Cookbook\Repositories\RepositoriesServiceProvider',
 		'Cookbook\Exception\ExceptionServiceProvider',
 		'Cookbook\Log\LogServiceProvider',
+		'Cookbook\Form\FormServiceProvider',
 
 	),
 
